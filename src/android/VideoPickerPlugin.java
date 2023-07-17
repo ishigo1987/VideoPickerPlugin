@@ -1,4 +1,4 @@
-package cordova-plugin-videopicker;
+package cordova.plugin.videopicker;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
