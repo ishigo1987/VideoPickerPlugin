@@ -53,8 +53,8 @@ public class VideoPickerPlugin extends CordovaPlugin {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == cordova.getActivity().RESULT_OK) {
                 Uri videoUri = data.getData();
-                String videoPath = videoUri.getPath();
-                callbackContext.success(videoPath);
+                // String videoPath = videoUri.getPath();
+                callbackContext.success(videoUri);
             } else if (resultCode == cordova.getActivity().RESULT_CANCELED) {
                 callbackContext.error("User canceled");
             } else {
