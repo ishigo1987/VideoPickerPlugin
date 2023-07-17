@@ -1,8 +1,10 @@
 package cordova.plugin.videopicker;
+import android.Manifest;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.ContentResolver;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -12,6 +14,11 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PermissionHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class VideoPickerPlugin extends CordovaPlugin {
     private static final int REQUEST_CODE = 1;
@@ -91,7 +98,7 @@ public class VideoPickerPlugin extends CordovaPlugin {
                 e.printStackTrace();
             }
         } else {
-            String[] projection = {MediaStore.Video.Media.DATA};
+            String[] projection = { MediaStore.Video.Media.DATA };
             Cursor cursor = contentResolver.query(uri, projection, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
@@ -103,4 +110,3 @@ public class VideoPickerPlugin extends CordovaPlugin {
         return videoPath;
     }
 }
-
