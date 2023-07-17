@@ -1,3 +1,4 @@
+```javascript
 cordova.plugins.VideoPicker.pickVideo(function(videoPath) {
       alert('Selected video path: ' + videoPath);
 }, function(error) {
