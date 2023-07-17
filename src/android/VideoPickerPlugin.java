@@ -1,8 +1,11 @@
 package cordova.plugin.videopicker;
-import android.Manifest;
 import android.content.Intent;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.ContentResolver;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -53,14 +56,51 @@ public class VideoPickerPlugin extends CordovaPlugin {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == cordova.getActivity().RESULT_OK) {
                 Uri videoUri = data.getData();
-                // String videoPath = videoUri.getPath();
-                callbackContext.success(videoUri);
+                String videoPath = getVideoPathFromUri(videoUri);
+                callbackContext.success(videoPath);
             } else if (resultCode == cordova.getActivity().RESULT_CANCELED) {
                 callbackContext.error("User canceled");
             } else {
                 callbackContext.error("Failed to pick video");
             }
         }
+    }
+
+    private String getVideoPathFromUri(Uri uri) {
+        Context context = this.cordova.getActivity().getApplicationContext();
+        ContentResolver contentResolver = context.getContentResolver();
+        String videoPath = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                InputStream inputStream = contentResolver.openInputStream(uri);
+                File cacheDir = context.getCacheDir();
+                File tempFile = File.createTempFile("temp_", ".mp4", cacheDir);
+                FileOutputStream outputStream = new FileOutputStream(tempFile);
+
+                byte[] buffer = new byte[8 * 1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                videoPath = tempFile.getAbsolutePath();
+                inputStream.close();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String[] projection = {MediaStore.Video.Media.DATA};
+            Cursor cursor = contentResolver.query(uri, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+                videoPath = cursor.getString(columnIndex);
+                cursor.close();
+            }
+        }
+
+        return videoPath;
     }
 }
 
