@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-videopicker" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>VideoPickerPlugin</name>
+    <description>Pick a video file</description>
+    <license>MIT</license>
+    <keywords>cordova, plugin, video, picker</keywords>
+    <author email="stephnguets@yahoo.fr" href="">Nguetseng Stephane</author>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="VideoPickerPlugin">
+                <param name="android-package" value="cordova-plugin-videopicker.VideoPickerPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/VideoPickerPlugin.java" target-dir="src/cordova-plugin-videopicker/VideoPickerPlugin" />
+    </platform>
+
+    <js-module name="VideoPickerPlugin" src="www/VideoPickerPlugin.js">
+        <clobbers target="cordova.plugins.VideoPickerPlugin" />
+    </js-module>
+
+</plugin>

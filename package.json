@@ -1,0 +1,31 @@
+{
+  "name": "cordova-plugin-videopicker",
+  "version": "1.0.0",
+  "description": "Android cordova plugin to pick a video file",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "video",
+    "picker",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ishigo1987/cordova-plugin-videopicker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ishigo1987/cordova-plugin-videopicker/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nguetseng Stephane",
+    "email": "stephnguets@yahoo.fr"
+  }
+}
+
